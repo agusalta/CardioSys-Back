@@ -11,10 +11,10 @@ describe("Pruebas API - TipoEstudio", () => {
     };
 
     const response = await request(app)
-      .post("/api/tipoEstudio") // Asegúrate de que esta ruta sea la correcta
+      .post("/api/tipoEstudio")
       .send(tipoEstudioData);
 
-    console.log("Respuesta creación:", response.body); // Para depuración
+    console.log("Respuesta creación:", response.body);
 
     expect(response.status).toBe(201);
     expect(response.body.message).toBe("Tipo de estudio creado exitosamente");
@@ -44,7 +44,7 @@ describe("Pruebas API - TipoEstudio", () => {
   test("Debería eliminar el tipo de estudio creado", async () => {
     const response = await request(app).delete(
       `/api/tipoEstudio/${tipoEstudioId}`
-    );
+    ); // Usamos el ID del tipoEstudio creado
 
     console.log("Respuesta eliminación:", response.body); // Para depuración
 

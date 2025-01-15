@@ -20,11 +20,15 @@ app.use("/api/estudio", estudioRoutes);
 app.use("/api/costoEstudio", costoEstudioRoutes);
 app.use("/api/tipoEstudio", tipoEstudioRoutes);
 
+// Cuando estamos testenado hay que comentar el port porque jest corre el servidor por su cuenta
+
 const PORT = process.env.PORT || 3333;
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
+
+// Cuando estamos testeando hay que comentar la linea 33 porque jest no entiende type modules
 
 // module.exports = app;
 export default app;

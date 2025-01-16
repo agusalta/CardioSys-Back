@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
 import pacienteRoutes from "./routes/pacienteRoutes.js";
 import seguroRoutes from "./routes/seguroRoutes.js";
@@ -8,8 +9,8 @@ import costoEstudioRoutes from "./routes/costoEstudioRoutes.js";
 import tipoEstudioRoutes from "./routes/tipoEstudioRoutes.js";
 
 dotenv.config();
-
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 // Rutas
@@ -19,6 +20,12 @@ app.use("/api/archivo", archivoRoutes);
 app.use("/api/estudio", estudioRoutes);
 app.use("/api/costoEstudio", costoEstudioRoutes);
 app.use("/api/tipoEstudio", tipoEstudioRoutes);
+
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Permite solo solicitudes de este origen
+  })
+);
 
 // Cuando estamos testenado hay que comentar el port porque jest corre el servidor por su cuenta
 

@@ -11,6 +11,11 @@ export const getSeguros = (callback) => {
   });
 };
 
+export const getSeguroById = (id, callback) => {
+  const query = "SELECT * FROM Seguro WHERE ID_Seguro = ?";
+  connection.query(query, [id], callback);
+};
+
 // Crear un nuevo seguro
 export const createSeguro = (data, callback) => {
   const { TipoSeguro } = data;

@@ -11,6 +11,19 @@ export const getAllSeguros = (req, res) => {
   });
 };
 
+export const getSeguroById = (req, res) => {
+  const { id } = req.params;
+  pacienteModel.getSeguroById(id, (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: "Error al obtener el seguro" });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ message: "Seguro no encontrado" });
+    }
+    res.status(200).json(results[0]);
+  });
+};
+
 export const createNuevoSeguro = (req, res) => {
   const seguroData = req.body;
   seguroModel.createSeguro(seguroData, (err, results) => {

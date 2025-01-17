@@ -72,7 +72,9 @@ export const deletePaciente = (req, res) => {
   const { id } = req.params;
   pacienteModel.deletePaciente(id, (err, results) => {
     if (err) {
-      return res.status(500).json({ error: "Error al eliminar el paciente" });
+      return res
+        .status(500)
+        .json({ error: "Error al eliminar el paciente:" + err.message });
     }
     if (results.affectedRows === 0) {
       return res.status(404).json({ message: "Paciente no encontrado" });

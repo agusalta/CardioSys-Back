@@ -27,7 +27,7 @@ app.use(
   })
 );
 
-// Cuando estamos testenado hay que comentar el port porque jest corre el servidor por su cuenta
+// Cuando estamos testeando hay que comentar el port porque jest corre el servidor por su cuenta
 
 const PORT = process.env.PORT || 3333;
 

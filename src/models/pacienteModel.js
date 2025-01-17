@@ -14,17 +14,13 @@ export const createPaciente = (pacienteData, callback) => {
     Peso,
     FrecuenciaCardiaca,
     FrecuenciaRespiratoria,
+    Sexo,
   } = pacienteData;
-
-  // Aseguramos que la fecha esté en el formato YYYY-MM-DD
-  const fechaNacimientoFormateada = new Date(FechaNacimiento)
-    .toISOString()
-    .split("T")[0];
 
   const query = `
     INSERT INTO Paciente 
-    (ID_Seguro, Nombre, DNI, Apellido, Email, Telefono, FechaNacimiento, Altura, Peso, FrecuenciaCardiaca, FrecuenciaRespiratoria) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    (ID_Seguro, Nombre, DNI, Apellido, Email, Telefono, FechaNacimiento, Altura, Peso, FrecuenciaCardiaca, FrecuenciaRespiratoria, Sexo) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   connection.query(
@@ -36,11 +32,12 @@ export const createPaciente = (pacienteData, callback) => {
       Apellido,
       Email,
       Telefono,
-      fechaNacimientoFormateada, // Usamos la fecha formateada
+      FechaNacimiento,
       Altura,
       Peso,
       FrecuenciaCardiaca,
       FrecuenciaRespiratoria,
+      Sexo,
     ],
     callback
   );
@@ -72,12 +69,13 @@ export const updatePaciente = (id, pacienteData, callback) => {
     Peso,
     FrecuenciaCardiaca,
     FrecuenciaRespiratoria,
+    Sexo,
   } = pacienteData;
   const query = `
     UPDATE Paciente 
     SET 
       ID_Seguro = ?, Nombre = ?, DNI = ?, Apellido = ?, Email = ?, Telefono = ?, FechaNacimiento = ?, 
-      Altura = ?, Peso = ?, FrecuenciaCardiaca = ?, FrecuenciaRespiratoria = ?
+      Altura = ?, Peso = ?, FrecuenciaCardiaca = ?, FrecuenciaRespiratoria = ?, Sexo = ?
     WHERE ID_Paciente = ?
   `;
   connection.query(
@@ -94,14 +92,21 @@ export const updatePaciente = (id, pacienteData, callback) => {
       Peso,
       FrecuenciaCardiaca,
       FrecuenciaRespiratoria,
+      Sexo,
       id,
     ],
     callback
   );
 };
 
-// Eliminar un paciente
 export const deletePaciente = (id, callback) => {
-  const query = "DELETE FROM Paciente WHERE ID_Paciente = ?";
-  connection.query(query, [id], callback);
+  const deleteEstudiosQuery = "DELETE FROM Estudio WHERE ID_Paciente = ?";
+  connection.query(deleteEstudiosQuery, [id], (err) => {
+    if (err) {
+      return callback(err);
+    }
+
+    const deletePacienteQuery = "DELETE FROM Paciente WHERE ID_Paciente = ?";
+    connection.query(deletePacienteQuery, [id], callback);
+  });
 };

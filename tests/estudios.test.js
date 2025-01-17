@@ -1,56 +1,51 @@
 import request from "supertest";
 import app from "../src/server";
 
-describe("Pruebas API - TipoEstudio", () => {
-  let tipoEstudioId;
+describe("Pruebas API - Estudio", () => {
+  let estudioId;
 
-  test("Debería crear un nuevo tipo de estudio", async () => {
-    const tipoEstudioData = {
-      NombreEstudio: "Estudio Cardíaco",
-      Descripcion: "Estudio relacionado con el corazón",
-    };
+  const estudioData = {
+    Fecha: "2024-08-15",
+    Asunto: "Chequeo General",
+    Observacion: "Observación inicial",
+    Factura: "FAC12345",
+    ID_Paciente: 2,
+    ID_TipoEstudio: 1,
+  };
 
-    const response = await request(app)
-      .post("/api/tipoEstudio") // Asegúrate de que esta ruta sea la correcta
-      .send(tipoEstudioData);
+  const estudioDataActualizado = {
+    Fecha: "2024-08-16",
+    Asunto: "Chequeo Cardiaco",
+    Observacion: "Observación actualizada",
+    Factura: "FAC67890",
+    ID_Paciente: 2,
+    ID_TipoEstudio: 2,
+  };
 
-    console.log("Respuesta creación:", response.body); // Para depuración
+  test("Debería crear un nuevo estudio", async () => {
+    const response = await request(app).post("/api/estudio").send(estudioData);
 
+    console.log("Respuesta creación:", response.body);
     expect(response.status).toBe(201);
-    expect(response.body.message).toBe("Tipo de estudio creado exitosamente");
-    tipoEstudioId = response.body.data.insertId; // Asignar el ID para pruebas posteriores
+    expect(response.body.message).toBe("Estudio creado exitosamente");
+    estudioId = response.body.data.insertId;
   });
 
-  // Test de actualización de TipoEstudio
-  test("Debería actualizar el tipo de estudio creado", async () => {
-    const tipoEstudioDataActualizado = {
-      NombreEstudio: "Estudio Cardiovascular",
-      Descripcion: "Estudio relacionado con el sistema cardiovascular",
-    };
-
+  test("Debería actualizar el estudio creado", async () => {
     const response = await request(app)
-      .put(`/api/tipoEstudio/${tipoEstudioId}`) // Usamos el ID del tipoEstudio creado
-      .send(tipoEstudioDataActualizado);
+      .put(`/api/estudio/${estudioId}`)
+      .send(estudioDataActualizado);
 
-    console.log("Respuesta actualización:", response.body); // Para depuración
-
+    console.log("Respuesta actualización:", response.body);
     expect(response.status).toBe(200);
-    expect(response.body.message).toBe(
-      "Tipo de estudio actualizado exitosamente"
-    );
+    expect(response.body.message).toBe("Estudio actualizado exitosamente");
   });
 
-  // Test de eliminación de TipoEstudio
-  test("Debería eliminar el tipo de estudio creado", async () => {
-    const response = await request(app).delete(
-      `/api/tipoEstudio/${tipoEstudioId}`
-    );
+  test("Debería eliminar el estudio creado", async () => {
+    const response = await request(app).delete(`/api/estudio/${estudioId}`);
 
-    console.log("Respuesta eliminación:", response.body); // Para depuración
-
+    console.log("Respuesta eliminación:", response.body);
     expect(response.status).toBe(200);
-    expect(response.body.message).toBe(
-      "Tipo de estudio eliminado exitosamente"
-    );
+    expect(response.body.message).toBe("Estudio eliminado exitosamente");
   });
 });

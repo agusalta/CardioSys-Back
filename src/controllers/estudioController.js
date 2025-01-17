@@ -11,6 +11,20 @@ export const getAllEstudios = (req, res) => {
   });
 };
 
+export const getEstudiosByPacienteId = (req, res) => {
+  const { id } = req.params;
+  estudioModel.getEstudiosByPacienteId(id, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        error: "Error al obtener estudios por ID de paciente",
+        details: err,
+      });
+    }
+    console.log("Resultados en el controlador:", results);
+    res.status(200).json(results);
+  });
+};
+
 export const createNuevoEstudio = (req, res) => {
   const estudioData = req.body;
   estudioModel.createEstudio(estudioData, (err, results) => {

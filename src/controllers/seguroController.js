@@ -13,7 +13,7 @@ export const getAllSeguros = (req, res) => {
 
 export const getSeguroById = (req, res) => {
   const { id } = req.params;
-  pacienteModel.getSeguroById(id, (err, results) => {
+  seguroModel.getSeguroById(id, (err, results) => {
     if (err) {
       return res.status(500).json({ error: "Error al obtener el seguro" });
     }

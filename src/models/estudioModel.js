@@ -7,6 +7,18 @@ export const getEstudios = (callback) => {
   });
 };
 
+export const getEstudiosByPacienteId = (idPaciente, callback) => {
+  connection.query(
+    "SELECT * FROM Estudio WHERE ID_Paciente = ?",
+    [idPaciente],
+    (err, results) => {
+      if (err) return callback(err);
+      console.log("Resultados:", results);
+      callback(null, results);
+    }
+  );
+};
+
 export const createEstudio = (data, callback) => {
   const { Fecha, Asunto, Observacion, Factura, ID_Paciente, ID_TipoEstudio } =
     data;

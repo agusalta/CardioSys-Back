@@ -53,12 +53,19 @@ export const updateEstudio = (req, res) => {
 
 export const deleteEstudio = (req, res) => {
   const { id } = req.params;
+
   estudioModel.deleteEstudio(id, (err, results) => {
     if (err) {
+      console.error("Error al eliminar el estudio:", err);
       return res
         .status(500)
-        .json({ error: "Error al eliminar estudio", details: err });
+        .json({ error: "Error al eliminar estudio", details: err.sqlMessage });
     }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ message: "Estudio no encontrado" });
+    }
+
     res.status(200).json({ message: "Estudio eliminado exitosamente" });
   });
 };

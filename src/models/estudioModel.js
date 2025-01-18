@@ -45,12 +45,25 @@ export const updateEstudio = (id, data, callback) => {
 };
 
 export const deleteEstudio = (id, callback) => {
-  connection.query(
-    "DELETE FROM Estudio WHERE ID_Estudio = ?",
-    [id],
-    (err, results) => {
-      if (err) return callback(err);
-      callback(null, results);
+  // Primero elimina los archivos relacionados con el estudio
+  connection.query("DELETE FROM Archivo WHERE ID_Estudio = ?", [id], (err) => {
+    if (err) {
+      console.error("Error al eliminar archivos relacionados:", err);
+      return callback(err);
     }
-  );
+
+    // Después elimina el estudio
+    connection.query(
+      "DELETE FROM Estudio WHERE ID_Estudio = ?",
+      [id],
+      (err, results) => {
+        if (err) {
+          console.error("Error al eliminar el estudio:", err);
+          return callback(err);
+        }
+
+        callback(null, results);
+      }
+    );
+  });
 };

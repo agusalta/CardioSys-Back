@@ -12,6 +12,19 @@ export const getAllTipoEstudios = (req, res) => {
   });
 };
 
+export const getTipoEstudioById = (req, res) => {
+  const { id } = req.params;
+  tipoEstudioModel.getTipoEstudioById(id, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        error: "Error al obtener el tipo de estudio por Id",
+        details: err,
+      });
+    }
+    res.status(200).json(results);
+  });
+};
+
 export const createNuevoTipoEstudio = (req, res) => {
   const tipoEstudioData = req.body;
   tipoEstudioModel.createTipoEstudio(tipoEstudioData, (err, results) => {

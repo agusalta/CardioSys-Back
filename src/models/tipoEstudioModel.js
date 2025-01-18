@@ -8,6 +8,17 @@ export const getTipoEstudios = (callback) => {
   });
 };
 
+export const getTipoEstudioById = (idTipoEstudio, callback) => {
+  connection.query(
+    "SELECT * FROM TipoEstudio WHERE ID_TipoEstudio = ?",
+    [idTipoEstudio],
+    (err, results) => {
+      if (err) return callback(err);
+      callback(null, results);
+    }
+  );
+};
+
 export const createTipoEstudio = (data, callback) => {
   const { NombreEstudio, Descripcion } = data;
   connection.query(

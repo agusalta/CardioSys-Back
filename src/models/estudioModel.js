@@ -13,7 +13,6 @@ export const getEstudiosByPacienteId = (idPaciente, callback) => {
     [idPaciente],
     (err, results) => {
       if (err) return callback(err);
-      console.log("Resultados:", results);
       callback(null, results);
     }
   );

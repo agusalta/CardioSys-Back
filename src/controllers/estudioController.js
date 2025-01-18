@@ -20,7 +20,6 @@ export const getEstudiosByPacienteId = (req, res) => {
         details: err,
       });
     }
-    console.log("Resultados en el controlador:", results);
     res.status(200).json(results);
   });
 };

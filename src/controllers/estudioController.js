@@ -24,25 +24,61 @@ export const getEstudiosByPacienteId = (req, res) => {
   });
 };
 
+export const getEstudioById = (req, res) => {
+  const { id } = req.params;
+
+  estudioModel.getEstudioById(id, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        error: "Error al obtener estudios por ID de paciente",
+        details: err,
+      });
+    }
+    res.status(200).json(results[0]);
+  });
+};
+
 export const createNuevoEstudio = (req, res) => {
   const estudioData = req.body;
+
   estudioModel.createEstudio(estudioData, (err, results) => {
     if (err) {
+      console.error("Error al crear estudio:", err);
       return res
         .status(500)
         .json({ error: "Error al crear estudio", details: err });
     }
-    res
-      .status(201)
-      .json({ message: "Estudio creado exitosamente", data: results });
+
+    if (results && results.insertId) {
+      console.log("Insert ID:", results.insertId);
+
+      return res.status(201).json({
+        message: "Estudio creado exitosamente",
+        data: {
+          ...estudioData,
+          ID_Estudio: results.insertId,
+        },
+      });
+    } else {
+      return res.status(500).json({ error: "No se generó un ID válido" });
+    }
   });
 };
 
 export const updateEstudio = (req, res) => {
   const { id } = req.params;
-  const estudioData = req.body;
+
+  const estudioData = req.body; // Primero asignamos el valor de req.body
+
+  if (!estudioData || !estudioData.ID_Paciente || !estudioData.ID_TipoEstudio) {
+    return res
+      .status(400)
+      .json({ error: "Faltan datos obligatorios del estudio" });
+  }
+
   estudioModel.updateEstudio(id, estudioData, (err, results) => {
     if (err) {
+      console.error("Error al actualizar el estudio:", err);
       return res
         .status(500)
         .json({ error: "Error al actualizar estudio", details: err });
@@ -53,6 +89,10 @@ export const updateEstudio = (req, res) => {
 
 export const deleteEstudio = (req, res) => {
   const { id } = req.params;
+
+  if (!id || isNaN(id)) {
+    return res.status(400).json({ error: "ID del estudio es inválido" });
+  }
 
   estudioModel.deleteEstudio(id, (err, results) => {
     if (err) {

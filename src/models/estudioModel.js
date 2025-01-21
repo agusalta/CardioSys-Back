@@ -7,6 +7,17 @@ export const getEstudios = (callback) => {
   });
 };
 
+export const getEstudioById = (IdEstudio, callback) => {
+  connection.query(
+    "SELECT * FROM Estudio WHERE ID_Estudio = ?",
+    [IdEstudio],
+    (err, results) => {
+      if (err) return callback(err);
+      callback(null, results);
+    }
+  );
+};
+
 export const getEstudiosByPacienteId = (idPaciente, callback) => {
   connection.query(
     "SELECT * FROM Estudio WHERE ID_Paciente = ?",
@@ -21,11 +32,13 @@ export const getEstudiosByPacienteId = (idPaciente, callback) => {
 export const createEstudio = (data, callback) => {
   const { Fecha, Asunto, Observacion, Factura, ID_Paciente, ID_TipoEstudio } =
     data;
+
   connection.query(
     "INSERT INTO Estudio (Fecha, Asunto, Observacion, Factura, ID_Paciente, ID_TipoEstudio) VALUES (?, ?, ?, ?, ?, ?)",
     [Fecha, Asunto, Observacion, Factura, ID_Paciente, ID_TipoEstudio],
     (err, results) => {
       if (err) return callback(err);
+      console.log("Resultados de la consulta:", results);
       callback(null, results);
     }
   );

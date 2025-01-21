@@ -6,6 +6,12 @@ const router = express.Router();
 // Ruta para obtener los archivos
 router.get("/archivos", archivoController.getArchivos);
 
+// Ruta para obtener los metadatos de los archivos de un estudio
+router.get("/estudio/:id", archivoController.getArchivosByEstudioId);
+
+// Ruta para obtener un archivo entero
+router.get("/:id", archivoController.getArchivoContentById);
+
 // Ruta para crear un archivo (con el middleware de Multer)
 router.post(
   "/archivos",
@@ -21,6 +27,6 @@ router.put(
 );
 
 // Ruta para eliminar un archivo
-router.delete("/archivos/:id", archivoController.deleteArchivo);
+router.delete("/:id", archivoController.deleteArchivo);
 
 export default router;

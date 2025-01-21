@@ -3,15 +3,51 @@ import multer from "multer";
 
 // Configuración de Multer para manejar el almacenamiento en memoria
 const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+
+// Configuración de Multer con límite de tamaño de archivo (10 MB) y tipo de archivo
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 10 * 1024 * 1024 }, // Límite de tamaño de archivo (10 MB)
+}).single("Archivo");
 
 // Obtener archivos
 export const getArchivos = (req, res) => {
   archivoModel.getArchivos((err, results) => {
     if (err) {
+      console.error("Error al obtener los archivos:", err);
       return res.status(500).json({
         error: "Error al obtener los archivos",
-        details: `Detalles del error: ${err.message}`,
+        details: err.message,
+      });
+    }
+    res.status(200).json(results);
+  });
+};
+
+// Obtener archivos de un estudio, sin blob
+export const getArchivosByEstudioId = (req, res) => {
+  const { id } = req.params;
+
+  archivoModel.getArchivosByEstudioId(id, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        error: "Error al obtener archivos por ID de estudio: " + err.message,
+        details: err,
+      });
+    }
+    res.status(200).json(results);
+  });
+};
+
+// Obtener un archivo entero
+export const getArchivoContentById = (req, res) => {
+  const { id } = req.params;
+
+  archivoModel.getArchivoContentById(id, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        error: "Error al obtener archivos por ID de estudio: " + err.message,
+        details: err,
       });
     }
     res.status(200).json(results);
@@ -20,6 +56,7 @@ export const getArchivos = (req, res) => {
 
 // Crear archivo
 export const createArchivo = (req, res) => {
+  // Verificar si se recibió un archivo
   if (!req.file) {
     return res.status(400).json({ error: "Se requiere un archivo" });
   }
@@ -28,6 +65,7 @@ export const createArchivo = (req, res) => {
   const fileBuffer = req.file.buffer;
   const fileName = req.file.originalname;
 
+  // Verificar que se haya proporcionado un ID_Estudio
   if (!ID_Estudio) {
     return res.status(400).json({ error: "Falta el ID_Estudio" });
   }
@@ -36,6 +74,7 @@ export const createArchivo = (req, res) => {
     { Archivo: fileBuffer, NombreArchivo: fileName, ID_Estudio },
     (err, results) => {
       if (err) {
+        console.error("Error al crear el archivo:", err);
         return res.status(500).json({
           error: "Error al crear el archivo",
           details: err.message,
@@ -73,6 +112,7 @@ export const updateArchivo = (req, res) => {
     { Archivo: fileBuffer, NombreArchivo: fileName, ID_Estudio },
     (err, results) => {
       if (err) {
+        console.error("Error al actualizar el archivo:", err);
         return res.status(500).json({
           error: "Error al actualizar el archivo",
           details: err.message,
@@ -92,6 +132,7 @@ export const deleteArchivo = (req, res) => {
 
   archivoModel.deleteArchivo(id, (err, results) => {
     if (err) {
+      console.error("Error al eliminar el archivo:", err);
       return res
         .status(500)
         .json({ error: "Error al eliminar el archivo", details: err.message });
@@ -104,4 +145,4 @@ export const deleteArchivo = (req, res) => {
 };
 
 // Middleware para subir el archivo
-export const uploadArchivo = upload.single("Archivo"); // Aquí "file" debe coincidir con el campo en el formulario de Postman
+export const uploadArchivo = upload;

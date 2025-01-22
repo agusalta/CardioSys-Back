@@ -31,7 +31,7 @@ export const getArchivoContentById = (idArchivo, callback) => {
     [idArchivo],
     (err, results) => {
       if (err) return callback(err);
-      callback(null, results[0]); // Devuelve el contenido del archivo
+      callback(null, results[0]);
     }
   );
 };

@@ -50,7 +50,18 @@ export const getArchivoContentById = (req, res) => {
         details: err,
       });
     }
-    res.status(200).json(results);
+
+    if (!results || !results.Archivo) {
+      return res.status(404).json({
+        error: "Archivo no encontrado",
+      });
+    }
+
+    // Establecer el encabezado Content-Type como 'application/pdf'
+    res.setHeader("Content-Type", "application/pdf");
+
+    // Enviar el archivo en forma de Buffer (binario)
+    res.status(200).send(results.Archivo);
   });
 };
 

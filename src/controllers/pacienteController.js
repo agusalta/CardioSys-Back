@@ -41,6 +41,26 @@ export const getPacienteById = (req, res) => {
   });
 };
 
+// Obtener el total de pacientes
+export const getTotalPacientes = (req, res) => {
+  pacienteModel.getTotalPacientes((err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(200).json(results);
+  });
+};
+
+// Obtener el total de pacientes nuevos este mes
+export const getPacientesNuevosEsteMes = (req, res) => {
+  pacienteModel.getPacientesNuevosEsteMes((err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(200).json(results);
+  });
+};
+
 // Actualizar un paciente
 export const updatePaciente = (req, res) => {
   const { id } = req.params;

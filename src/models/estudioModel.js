@@ -29,6 +29,16 @@ export const getEstudiosByPacienteId = (idPaciente, callback) => {
   );
 };
 
+export const getTotalRecaudado = (callback) => {
+  connection.query(
+    "SELECT SUM(Factura) AS totalRecaudado FROM Estudio WHERE Factura > 0 AND Fecha >= CURDATE() - INTERVAL (DAY(CURDATE()) - 1) DAY AND Fecha < CURDATE() + INTERVAL 1 DAY;",
+    (err, results) => {
+      if (err) return callback(err);
+      callback(null, results);
+    }
+  );
+};
+
 export const createEstudio = (data, callback) => {
   const { Fecha, Asunto, Observacion, Factura, ID_Paciente, ID_TipoEstudio } =
     data;

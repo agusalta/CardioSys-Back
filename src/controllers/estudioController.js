@@ -24,6 +24,15 @@ export const getEstudiosByPacienteId = (req, res) => {
   });
 };
 
+export const getTotalRecaudado = (req, res) => {
+  estudioModel.getTotalRecaudado((err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(200).json(results[0] || 0);
+  });
+};
+
 export const getEstudioById = (req, res) => {
   const { id } = req.params;
 

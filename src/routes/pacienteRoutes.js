@@ -5,6 +5,8 @@ import {
   getPacienteById,
   updatePaciente,
   deletePaciente,
+  getTotalPacientes,
+  getPacientesNuevosEsteMes,
 } from "../controllers/pacienteController.js";
 
 const router = express.Router();
@@ -17,6 +19,12 @@ router.get("/", getAllPacientes);
 
 // Obtener un paciente por ID
 router.get("/:id", getPacienteById);
+
+// Obtener el total de pacientes
+router.get("/get/count", getTotalPacientes);
+
+// Obtener el total de pacientes nuevos este mes
+router.get("/get/month", getPacientesNuevosEsteMes);
 
 // Actualizar un paciente por ID
 router.put("/:id", updatePaciente);

@@ -7,6 +7,7 @@ import archivoRoutes from "./routes/archivoRoutes.js";
 import estudioRoutes from "./routes/estudioRoutes.js";
 import costoEstudioRoutes from "./routes/costoEstudioRoutes.js";
 import tipoEstudioRoutes from "./routes/tipoEstudioRoutes.js";
+import activityRoutes from "./routes/activityRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -20,6 +21,7 @@ app.use("/api/archivo", archivoRoutes);
 app.use("/api/estudio", estudioRoutes);
 app.use("/api/costoEstudio", costoEstudioRoutes);
 app.use("/api/tipoEstudio", tipoEstudioRoutes);
+app.use("/api/activity", activityRoutes);
 
 app.use(
   cors({

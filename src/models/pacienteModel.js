@@ -55,6 +55,29 @@ export const getPacienteById = (id, callback) => {
   connection.query(query, [id], callback);
 };
 
+// Obtener el total de pacientes
+export const getTotalPacientes = (callback) => {
+  const query = "SELECT COUNT(*) AS total FROM Paciente";
+  connection.query(query, (err, results) => {
+    if (err) {
+      return callback(err, null);
+    }
+    callback(null, results[0].total);
+  });
+};
+
+// Obtener el total de pacientes nuevos este mes
+export const getPacientesNuevosEsteMes = (callback) => {
+  const query =
+    "SELECT COUNT(*) as total FROM paciente WHERE FechaCreacion >= CURDATE() - INTERVAL (DAY(CURDATE()) - 1) DAY AND FechaCreacion < CURDATE() + INTERVAL 1 DAY;";
+  connection.query(query, (err, results) => {
+    if (err) {
+      return callback(err, null);
+    }
+    callback(null, results[0]);
+  });
+};
+
 // Actualizar un paciente
 export const updatePaciente = (id, pacienteData, callback) => {
   const {

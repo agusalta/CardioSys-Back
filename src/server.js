@@ -23,7 +23,9 @@ app.use("/api/tipoEstudio", tipoEstudioRoutes);
 
 app.use(
   cors({
-    origin: "http://localhost:3000", // Permite solo solicitudes de este origen
+    origin: "http://localhost:3001",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type"],
   })
 );
 

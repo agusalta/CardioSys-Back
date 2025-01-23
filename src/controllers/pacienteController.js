@@ -46,9 +46,6 @@ export const updatePaciente = (req, res) => {
   const { id } = req.params;
   const pacienteData = req.body;
 
-  console.log("ID recibido para actualización:", id);
-  console.log("Datos del paciente a actualizar:", pacienteData);
-
   pacienteModel.updatePaciente(id, pacienteData, (err, results) => {
     if (err) {
       console.error("Error al actualizar paciente:", err);
@@ -56,8 +53,6 @@ export const updatePaciente = (req, res) => {
         .status(500)
         .json({ error: "Error al actualizar el paciente", err });
     }
-
-    console.log("Resultados de la actualización:", results);
 
     if (results.affectedRows === 0) {
       return res.status(404).json({ message: "Paciente no encontrado" });

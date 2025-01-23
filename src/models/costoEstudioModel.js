@@ -8,6 +8,18 @@ export const getCostoEstudios = (callback) => {
   });
 };
 
+export const getCostoEstudioByIds = (ID_TipoEstudio, ID_Seguro, callback) => {
+  connection.query(
+    "SELECT Costo FROM CostoEstudio WHERE ID_TipoEstudio = ? AND ID_Seguro = ?",
+    [ID_TipoEstudio, ID_Seguro],
+    (err, results) => {
+      if (err) return callback(err);
+      if (results.length === 0) return callback(null, null);
+      callback(null, results[0].Costo);
+    }
+  );
+};
+
 export const createCostoEstudio = (data, callback) => {
   const { ID_TipoEstudio, ID_Seguro, Costo } = data;
   connection.query(
@@ -20,16 +32,18 @@ export const createCostoEstudio = (data, callback) => {
   );
 };
 
-export const updateCostoEstudio = (id, data, callback) => {
-  const { ID_TipoEstudio, ID_Seguro, Costo } = data;
-  connection.query(
-    "UPDATE CostoEstudio SET ID_TipoEstudio = ?, ID_Seguro = ?, Costo = ? WHERE ID_Costo = ?",
-    [ID_TipoEstudio, ID_Seguro, Costo, id],
-    (err, results) => {
-      if (err) return callback(err);
-      callback(null, results);
-    }
-  );
+export const updateCostoEstudio = (
+  ID_TipoEstudio,
+  ID_Seguro,
+  Costo,
+  callback
+) => {
+  const query = `
+    UPDATE costoestudio
+    SET Costo = ?
+    WHERE ID_TipoEstudio = ? AND ID_Seguro = ?
+  `;
+  connection.query(query, [Costo, ID_TipoEstudio, ID_Seguro], callback);
 };
 
 export const deleteCostoEstudio = (id, callback) => {

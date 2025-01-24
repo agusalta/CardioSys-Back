@@ -24,6 +24,29 @@ export const getSeguroById = (req, res) => {
   });
 };
 
+export const getEmpresasDePrepagas = (req, res) => {
+  seguroModel.getEmpresasDePrepagas((err, results) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ error: "Error al obtener empresas de prepagos" });
+    }
+    res.status(200).json(results);
+  });
+};
+
+export const getEmpresaDePrepagaPorId = (req, res) => {
+  const { id } = req.params;
+  seguroModel.getEmpresaDePrepagaPorId(id, (err, results) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ error: "Error al obtener empresa de prepago por ID" });
+    }
+    res.status(200).json(results);
+  });
+};
+
 export const createNuevoSeguro = (req, res) => {
   const seguroData = req.body;
   seguroModel.createSeguro(seguroData, (err, results) => {

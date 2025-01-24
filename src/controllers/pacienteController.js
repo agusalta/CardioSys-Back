@@ -12,7 +12,7 @@ export const createPaciente = (req, res) => {
     }
     res.status(201).json({
       message: "Paciente creado exitosamente",
-      insertId: results.insertId,
+      ID_Paciente: results.insertId,
     });
   });
 };

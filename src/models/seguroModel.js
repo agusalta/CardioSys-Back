@@ -11,6 +11,40 @@ export const getSeguros = (callback) => {
   });
 };
 
+export const getEmpresasDePrepagas = (callback) => {
+  connection.query("SELECT * FROM Empresas_Seguro", (err, results) => {
+    if (err) {
+      console.error("Error al obtener empresas de prepagos:", err);
+      return callback(err);
+    }
+    callback(null, results);
+  });
+};
+
+export const getEmpresaDePrepagaPorId = (id, callback) => {
+  const query = "SELECT * FROM Empresas_Seguro WHERE ID_Empresa = ?";
+  connection.query(query, [id], callback);
+};
+
+export const updateEmpresaDePrepaga = (id, data, callback) => {
+  const { ID_Empresa, ID_Seguro } = data;
+  if (!ID_Empresa || !ID_Seguro) {
+    return callback(new Error("ID y ID_Empresa son requeridos"));
+  }
+
+  connection.query(
+    "UPDATE Empresas_Seguro SET ID_Empresa = ? WHERE ID_Seguro = ?",
+    [ID_Empresa, ID_Seguro],
+    (err, results) => {
+      if (err) {
+        console.error(`Error al actualizar empresa ID ${id}:`, err);
+        return callback(err);
+      }
+      callback(null, results);
+    }
+  );
+};
+
 export const getSeguroById = (id, callback) => {
   const query = "SELECT * FROM Seguro WHERE ID_Seguro = ?";
   connection.query(query, [id], callback);

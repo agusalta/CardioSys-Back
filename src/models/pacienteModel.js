@@ -4,6 +4,7 @@ import { connection } from "../config/db.js";
 export const createPaciente = (pacienteData, callback) => {
   const {
     ID_Seguro,
+    ID_Empresa = null, // Por defecto, NULL si no se envía
     Nombre,
     DNI,
     Apellido,
@@ -19,14 +20,15 @@ export const createPaciente = (pacienteData, callback) => {
 
   const query = `
     INSERT INTO Paciente 
-    (ID_Seguro, Nombre, DNI, Apellido, Email, Telefono, FechaNacimiento, Altura, Peso, FrecuenciaCardiaca, FrecuenciaRespiratoria, Sexo) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    (ID_Seguro, ID_Empresa, Nombre, DNI, Apellido, Email, Telefono, FechaNacimiento, Altura, Peso, FrecuenciaCardiaca, FrecuenciaRespiratoria, Sexo) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   connection.query(
     query,
     [
       ID_Seguro,
+      ID_Empresa, // Puede ser NULL si no es prepaga
       Nombre,
       DNI,
       Apellido,
@@ -79,9 +81,11 @@ export const getPacientesNuevosEsteMes = (callback) => {
 };
 
 // Actualizar un paciente
+// Actualizar un paciente
 export const updatePaciente = (id, pacienteData, callback) => {
   const {
     ID_Seguro,
+    ID_Empresa = null, // Campo opcional para prepagas
     Nombre,
     DNI,
     Apellido,
@@ -94,17 +98,31 @@ export const updatePaciente = (id, pacienteData, callback) => {
     FrecuenciaRespiratoria,
     Sexo,
   } = pacienteData;
+
   const query = `
     UPDATE Paciente 
     SET 
-      ID_Seguro = ?, Nombre = ?, DNI = ?, Apellido = ?, Email = ?, Telefono = ?, FechaNacimiento = ?, 
-      Altura = ?, Peso = ?, FrecuenciaCardiaca = ?, FrecuenciaRespiratoria = ?, Sexo = ?
+      ID_Seguro = ?, 
+      ID_Empresa = ?, 
+      Nombre = ?, 
+      DNI = ?, 
+      Apellido = ?, 
+      Email = ?, 
+      Telefono = ?, 
+      FechaNacimiento = ?, 
+      Altura = ?, 
+      Peso = ?, 
+      FrecuenciaCardiaca = ?, 
+      FrecuenciaRespiratoria = ?, 
+      Sexo = ?
     WHERE ID_Paciente = ?
   `;
+
   connection.query(
     query,
     [
       ID_Seguro,
+      ID_Empresa, // Se incluye el nuevo campo
       Nombre,
       DNI,
       Apellido,

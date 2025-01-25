@@ -81,7 +81,6 @@ export const getPacientesNuevosEsteMes = (callback) => {
 };
 
 // Actualizar un paciente
-// Actualizar un paciente
 export const updatePaciente = (id, pacienteData, callback) => {
   const {
     ID_Seguro,

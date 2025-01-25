@@ -19,6 +19,16 @@ export const getTipoEstudioById = (idTipoEstudio, callback) => {
   );
 };
 
+export const getEstudioMasRealizadoEnElMes = (callback) => {
+  connection.query(
+    "SELECT te.NombreEstudio, COUNT(e.ID_TipoEstudio) AS Cantidad FROM estudio e JOIN tipoestudio te ON e.ID_TipoEstudio = te.ID_TipoEstudio WHERE MONTH(e.Fecha) = MONTH(CURDATE()) AND YEAR(e.Fecha) = YEAR(CURDATE()) GROUP BY e.ID_TipoEstudio ORDER BY Cantidad DESC LIMIT 1;",
+    (err, results) => {
+      if (err) return callback(err);
+      callback(null, results);
+    }
+  );
+};
+
 export const createTipoEstudio = (data, callback) => {
   const { NombreEstudio, Descripcion } = data;
   connection.query(

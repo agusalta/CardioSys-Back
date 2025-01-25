@@ -35,6 +35,17 @@ export const getEmpresasDePrepagas = (req, res) => {
   });
 };
 
+export const getCantSegurosPorPaciente = (req, res) => {
+  seguroModel.getCantSegurosPorPaciente((err, results) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ error: "Error al obtener cantidad de seguros por paciente" });
+    }
+    res.status(200).json(results);
+  });
+};
+
 export const getEmpresaDePrepagaPorId = (req, res) => {
   const { id } = req.params;
   seguroModel.getEmpresaDePrepagaPorId(id, (err, results) => {

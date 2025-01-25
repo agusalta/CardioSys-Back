@@ -25,6 +25,20 @@ export const getTipoEstudioById = (req, res) => {
   });
 };
 
+export const getEstudioMasRealizadoEnElMes = (req, res) => {
+  tipoEstudioModel.getEstudioMasRealizadoEnElMes((err, results) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({
+          error: "Error al obtener el estudio mas realizado",
+          details: err,
+        });
+    }
+    res.status(200).json(results);
+  });
+};
+
 export const createNuevoTipoEstudio = (req, res) => {
   const tipoEstudioData = req.body;
   tipoEstudioModel.createTipoEstudio(tipoEstudioData, (err, results) => {

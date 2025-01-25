@@ -26,6 +26,16 @@ export const getEmpresaDePrepagaPorId = (id, callback) => {
   connection.query(query, [id], callback);
 };
 
+export const getCantSegurosPorPaciente = (callback) => {
+  const query =
+    "SELECT seguro.TipoSeguro AS Seguro, COUNT(paciente.ID_Paciente) AS NumeroDePacientes " +
+    "FROM paciente " +
+    "JOIN seguro ON paciente.ID_Seguro = seguro.ID_Seguro " +
+    "GROUP BY seguro.TipoSeguro " +
+    "ORDER BY NumeroDePacientes DESC;";
+  connection.query(query, callback);
+};
+
 export const updateEmpresaDePrepaga = (id, data, callback) => {
   const { ID_Empresa, ID_Seguro } = data;
   if (!ID_Empresa || !ID_Seguro) {

@@ -29,6 +29,17 @@ export const getEstudiosByPacienteId = (idPaciente, callback) => {
   );
 };
 
+export const getEstudioByFechas = (FechaInicio, FechaFin, callback) => {
+  connection.query(
+    "SELECT * FROM Estudio WHERE Fecha >= ? AND Fecha < ?",
+    [FechaInicio, FechaFin],
+    (err, results) => {
+      if (err) return callback(err);
+      callback(null, results);
+    }
+  );
+};
+
 export const getTotalRecaudado = (callback) => {
   connection.query(
     "SELECT SUM(Factura) AS totalRecaudado FROM Estudio WHERE Factura > 0 AND Fecha >= CURDATE() - INTERVAL (DAY(CURDATE()) - 1) DAY AND Fecha < CURDATE() + INTERVAL 1 DAY;",

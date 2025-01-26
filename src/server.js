@@ -9,11 +9,22 @@ import costoEstudioRoutes from "./routes/costoEstudioRoutes.js";
 import tipoEstudioRoutes from "./routes/tipoEstudioRoutes.js";
 import activityRoutes from "./routes/activityRoutes.js";
 import configRoutes from "./routes/ConfigRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 const app = express();
-app.use(cors());
+
 app.use(express.json());
+
+// Configuración de CORS con credenciales habilitadas
+app.use(
+  cors({
+    origin: "http://localhost:3001", // Asegúrate de que el frontend esté corriendo en este puerto
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type"],
+    credentials: true, // Permitir el envío de cookies y credenciales
+  })
+);
 
 // Rutas
 app.use("/api/pacientes", pacienteRoutes);
@@ -24,16 +35,7 @@ app.use("/api/costoEstudio", costoEstudioRoutes);
 app.use("/api/tipoEstudio", tipoEstudioRoutes);
 app.use("/api/activity", activityRoutes);
 app.use("/api/config", configRoutes);
-
-app.use(
-  cors({
-    origin: "http://localhost:3001",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type"],
-  })
-);
-
-// Cuando estamos testeando hay que comentar el port porque jest corre el servidor por su cuenta
+app.use("/api", authRoutes);
 
 const PORT = process.env.PORT || 3333;
 
@@ -41,7 +43,4 @@ app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
 
-// Cuando estamos testeando hay que comentar la linea 33 porque jest no entiende type modules
-
-// module.exports = app;
 export default app;

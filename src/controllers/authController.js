@@ -51,6 +51,22 @@ export const logout = (req, res) => {
   res.json({ message: "Cierre de sesión exitoso" });
 };
 
+export const checkAuth = (req, res) => {
+  const token = req.cookies.auth;
+
+  if (!token) {
+    return res.status(401).json({ isLoggedIn: false });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ isLoggedIn: false });
+    }
+
+    res.json({ isLoggedIn: true, username: decoded.username });
+  });
+};
+
 export const protectRoute = (req, res, next) => {
   const authHeader = req.headers["authorization"];
 

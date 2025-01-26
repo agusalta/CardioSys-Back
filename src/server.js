@@ -10,19 +10,20 @@ import tipoEstudioRoutes from "./routes/tipoEstudioRoutes.js";
 import activityRoutes from "./routes/activityRoutes.js";
 import configRoutes from "./routes/ConfigRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 
-// Configuración de CORS con credenciales habilitadas
 app.use(
   cors({
-    origin: "http://localhost:3001", // Asegúrate de que el frontend esté corriendo en este puerto
+    origin: "http://localhost:3001",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type"],
-    credentials: true, // Permitir el envío de cookies y credenciales
+    credentials: true,
   })
 );
 

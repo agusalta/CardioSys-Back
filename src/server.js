@@ -8,7 +8,7 @@ import estudioRoutes from "./routes/estudioRoutes.js";
 import costoEstudioRoutes from "./routes/costoEstudioRoutes.js";
 import tipoEstudioRoutes from "./routes/tipoEstudioRoutes.js";
 import activityRoutes from "./routes/activityRoutes.js";
-import configRoutes from "./routes/ConfigRoutes.js";
+import configRoutes from "./routes/configRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import cookieParser from "cookie-parser";
 

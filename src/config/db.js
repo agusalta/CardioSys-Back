@@ -10,6 +10,7 @@ const createConnection = () => {
     password: process.env.MYSQL_ROOT_PASSWORD,
     database: process.env.MYSQL_DATABASE,
     port: process.env.MYSQL_PORT,
+    connectTimeout: 10000,
     charset: "utf8mb4",
   });
 

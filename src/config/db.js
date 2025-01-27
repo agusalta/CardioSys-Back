@@ -11,6 +11,9 @@ const createConnection = () => {
     database: process.env.MYSQL_DATABASE,
     port: process.env.MYSQL_PORT,
     connectTimeout: 10000,
+    ssl: {
+      rejectUnauthorized: false, // Certificados autofirmados
+    },
     charset: "utf8mb4",
   });
 
@@ -22,7 +25,17 @@ const createConnection = () => {
 
   connection.connect((err) => {
     if (err) {
-      console.error("Error de conexión: ", err);
+      if (err.code === "ETIMEDOUT") {
+        console.error(
+          "Error: Tiempo de conexión agotado. Revisa tu host o configuración de red."
+        );
+      } else if (err.code === "ECONNREFUSED") {
+        console.error(
+          "Error: Conexión rechazada. Verifica que tu base de datos esté activa y accesible."
+        );
+      } else {
+        console.error("Error desconocido de conexión: ", err);
+      }
       return;
     }
     console.log("Conectado a la base de datos");

@@ -5,13 +5,19 @@ import mysql from "mysql2";
 
 const createConnection = () => {
   const connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT || 3306,
+    host: process.env.MYSQLHOST,
+    user: process.env.MYSQLUSER,
+    password: process.env.MYSQL_ROOT_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
+    port: process.env.MYSQL_PORT,
     charset: "utf8mb4",
   });
+
+  console.log("USER", process.env.MYSQLUSER);
+  console.log("PASS", process.env.MYSQL_ROOT_PASSWORD);
+  console.log("HOST", process.env.MYSQLHOST);
+  console.log("PORT", process.env.MYSQL_URL || 8080);
+  console.log("DB", process.env.MYSQL_DATABASE);
 
   connection.connect((err) => {
     if (err) {

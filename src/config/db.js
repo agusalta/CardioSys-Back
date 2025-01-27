@@ -16,7 +16,7 @@ const createConnection = () => {
   console.log("USER", process.env.MYSQLUSER);
   console.log("PASS", process.env.MYSQL_ROOT_PASSWORD);
   console.log("HOST", process.env.MYSQLHOST);
-  console.log("PORT", process.env.MYSQL_URL || 8080);
+  console.log("PORT", process.env.MYSQL_URL || 3306);
   console.log("DB", process.env.MYSQL_DATABASE);
 
   connection.connect((err) => {

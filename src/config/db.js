@@ -3,17 +3,19 @@ dotenv.config();
 
 import mysql from "mysql2";
 
-const createConnection = () => {
+// Función para hacer una pausa de 3 segundos
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const createConnection = async () => {
+  // Hacemos una pausa de 3 segundos antes de ejecutar la conexión
+  await sleep(3000);
+
   const connection = mysql.createConnection({
     host: process.env.MYSQLHOST,
     user: process.env.MYSQLUSER,
     password: process.env.MYSQL_ROOT_PASSWORD,
     database: process.env.MYSQL_DATABASE,
     port: process.env.MYSQL_PORT,
-    connectTimeout: 10000,
-    ssl: {
-      rejectUnauthorized: false, // Certificados autofirmados
-    },
     charset: "utf8mb4",
   });
 
@@ -40,6 +42,7 @@ const createConnection = () => {
   return connection;
 };
 
-let connection = createConnection();
+// Llamamos a createConnection de manera asíncrona
+let connection = await createConnection();
 
 export { createConnection, connection };

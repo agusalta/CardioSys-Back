@@ -3,13 +3,7 @@ dotenv.config();
 
 import mysql from "mysql2";
 
-// Función para hacer una pausa de 3 segundos
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const createConnection = async () => {
-  // Hacemos una pausa de 3 segundos antes de ejecutar la conexión
-  await sleep(3000);
-
+const createConnection = () => {
   const connection = mysql.createConnection({
     host: process.env.MYSQLHOST,
     user: process.env.MYSQLUSER,
@@ -42,7 +36,6 @@ const createConnection = async () => {
   return connection;
 };
 
-// Llamamos a createConnection de manera asíncrona
-let connection = await createConnection();
+let connection = createConnection();
 
 export { createConnection, connection };

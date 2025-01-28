@@ -26,15 +26,11 @@ const createConnection = () => {
   connection.connect((err) => {
     if (err) {
       if (err.code === "ETIMEDOUT") {
-        console.error(
-          "Error: Tiempo de conexión agotado. Revisa tu host o configuración de red."
-        );
+        console.error(error.message);
       } else if (err.code === "ECONNREFUSED") {
-        console.error(
-          "Error: Conexión rechazada. Verifica que tu base de datos esté activa y accesible."
-        );
+        console.error(error.message);
       } else {
-        console.error("Error desconocido de conexión: ", err);
+        console.error("Error desconocido de conexión: ", err.message);
       }
       return;
     }

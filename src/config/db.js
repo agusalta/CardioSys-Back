@@ -26,9 +26,9 @@ const createConnection = () => {
   connection.connect((err) => {
     if (err) {
       if (err.code === "ETIMEDOUT") {
-        console.error(error.message);
+        console.error(err.message);
       } else if (err.code === "ECONNREFUSED") {
-        console.error(error.message);
+        console.error(err.message);
       } else {
         console.error("Error desconocido de conexión: ", err.message);
       }

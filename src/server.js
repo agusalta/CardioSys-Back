@@ -28,14 +28,14 @@ app.use(
 );
 
 // Rutas
-app.use("/api/pacientes", pacienteRoutes);
-app.use("/api/seguro", seguroRoutes);
-app.use("/api/archivo", archivoRoutes);
-app.use("/api/estudio", estudioRoutes);
-app.use("/api/costoEstudio", costoEstudioRoutes);
-app.use("/api/tipoEstudio", tipoEstudioRoutes);
-app.use("/api/activity", activityRoutes);
-app.use("/api/config", configRoutes);
+app.use("/pacientes", pacienteRoutes);
+app.use("/seguro", seguroRoutes);
+app.use("/archivo", archivoRoutes);
+app.use("/estudio", estudioRoutes);
+app.use("/costoEstudio", costoEstudioRoutes);
+app.use("/tipoEstudio", tipoEstudioRoutes);
+app.use("/activity", activityRoutes);
+app.use("/config", configRoutes);
 app.use("/api", authRoutes);
 
 const PORT = process.env.PORT || 3333;

@@ -6,7 +6,7 @@ export const login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const user = await findUserByUsername(username);
+    const user = findUserByUsername(username);
 
     if (!user) {
       return res.status(401).json({ message: "Usuario no encontrado" });

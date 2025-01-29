@@ -11,7 +11,6 @@ import activityRoutes from "./routes/activityRoutes.js";
 import configRoutes from "./routes/configRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import cookieParser from "cookie-parser";
-import { createConnection } from "./config/db.js";
 
 dotenv.config();
 const app = express();
@@ -38,8 +37,6 @@ app.use("/api/tipoEstudio", tipoEstudioRoutes);
 app.use("/api/activity", activityRoutes);
 app.use("/api/config", configRoutes);
 app.use("/api", authRoutes);
-
-createConnection();
 
 const PORT = process.env.PORT || 3333;
 

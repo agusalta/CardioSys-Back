@@ -36,7 +36,7 @@ app.use("/costoEstudio", costoEstudioRoutes);
 app.use("/tipoEstudio", tipoEstudioRoutes);
 app.use("/activity", activityRoutes);
 app.use("/config", configRoutes);
-app.use("/api", authRoutes);
+app.use("/auth", authRoutes);
 
 const PORT = process.env.PORT || 3333;
 

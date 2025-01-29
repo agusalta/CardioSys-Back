@@ -2,7 +2,7 @@ import { connection } from "../config/db.js";
 
 // Obtener todos los seguros
 export const getSeguros = (callback) => {
-  connection.query("SELECT * FROM Seguro", (err, results) => {
+  connection.query("SELECT * FROM seguro", (err, results) => {
     if (err) {
       console.error("Error al obtener seguros:", err);
       return callback(err);

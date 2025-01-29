@@ -47,7 +47,7 @@ export const createPaciente = (pacienteData, callback) => {
 
 // Obtener todos los pacientes
 export const getAllPacientes = (callback) => {
-  const query = "SELECT * FROM Paciente";
+  const query = "SELECT * FROM paciente";
   connection.query(query, callback);
 };
 

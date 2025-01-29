@@ -12,7 +12,7 @@ export const getSeguros = (callback) => {
 };
 
 export const getEmpresasDePrepagas = (callback) => {
-  connection.query("SELECT * FROM Empresas_Seguro", (err, results) => {
+  connection.query("SELECT * FROM empresas_seguro", (err, results) => {
     if (err) {
       console.error("Error al obtener empresas de prepagos:", err);
       return callback(err);
@@ -22,7 +22,7 @@ export const getEmpresasDePrepagas = (callback) => {
 };
 
 export const getEmpresaDePrepagaPorId = (id, callback) => {
-  const query = "SELECT * FROM Empresas_Seguro WHERE ID_Empresa = ?";
+  const query = "SELECT * FROM empresas_seguro WHERE ID_Empresa = ?";
   connection.query(query, [id], callback);
 };
 
@@ -43,7 +43,7 @@ export const updateEmpresaDePrepaga = (id, data, callback) => {
   }
 
   connection.query(
-    "UPDATE Empresas_Seguro SET ID_Empresa = ? WHERE ID_Seguro = ?",
+    "UPDATE empresas_seguro SET ID_Empresa = ? WHERE ID_Seguro = ?",
     [ID_Empresa, ID_Seguro],
     (err, results) => {
       if (err) {
@@ -56,7 +56,7 @@ export const updateEmpresaDePrepaga = (id, data, callback) => {
 };
 
 export const getSeguroById = (id, callback) => {
-  const query = "SELECT * FROM Seguro WHERE ID_Seguro = ?";
+  const query = "SELECT * FROM seguro WHERE ID_Seguro = ?";
   connection.query(query, [id], callback);
 };
 
@@ -68,7 +68,7 @@ export const createSeguro = (data, callback) => {
   }
 
   connection.query(
-    "INSERT INTO Seguro (TipoSeguro) VALUES (?)",
+    "INSERT INTO seguro (TipoSeguro) VALUES (?)",
     [TipoSeguro],
     (err, results) => {
       if (err) {
@@ -88,7 +88,7 @@ export const updateSeguro = (id, data, callback) => {
   }
 
   connection.query(
-    "UPDATE Seguro SET TipoSeguro = ? WHERE ID_Seguro = ?",
+    "UPDATE seguro SET TipoSeguro = ? WHERE ID_Seguro = ?",
     [TipoSeguro, id],
     (err, results) => {
       if (err) {
@@ -107,7 +107,7 @@ export const deleteSeguro = (id, callback) => {
   }
 
   connection.query(
-    "DELETE FROM Seguro WHERE ID_Seguro = ?",
+    "DELETE FROM seguro WHERE ID_Seguro = ?",
     [id],
     (err, results) => {
       if (err) {

@@ -53,13 +53,13 @@ export const getAllPacientes = (callback) => {
 
 // Obtener un paciente por ID
 export const getPacienteById = (id, callback) => {
-  const query = "SELECT * FROM Paciente WHERE ID_Paciente = ?";
+  const query = "SELECT * FROM paciente WHERE ID_Paciente = ?";
   connection.query(query, [id], callback);
 };
 
 // Obtener el total de pacientes
 export const getTotalPacientes = (callback) => {
-  const query = "SELECT COUNT(*) AS total FROM Paciente";
+  const query = "SELECT COUNT(*) AS total FROM paciente";
   connection.query(query, (err, results) => {
     if (err) {
       return callback(err, null);
@@ -99,7 +99,7 @@ export const updatePaciente = (id, pacienteData, callback) => {
   } = pacienteData;
 
   const query = `
-    UPDATE Paciente 
+    UPDATE paciente 
     SET 
       ID_Seguro = ?, 
       ID_Empresa = ?, 
@@ -140,13 +140,13 @@ export const updatePaciente = (id, pacienteData, callback) => {
 };
 
 export const deletePaciente = (id, callback) => {
-  const deleteEstudiosQuery = "DELETE FROM Estudio WHERE ID_Paciente = ?";
+  const deleteEstudiosQuery = "DELETE FROM estudio WHERE ID_Paciente = ?";
   connection.query(deleteEstudiosQuery, [id], (err) => {
     if (err) {
       return callback(err);
     }
 
-    const deletePacienteQuery = "DELETE FROM Paciente WHERE ID_Paciente = ?";
+    const deletePacienteQuery = "DELETE FROM paciente WHERE ID_Paciente = ?";
     connection.query(deletePacienteQuery, [id], callback);
   });
 };

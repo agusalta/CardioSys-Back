@@ -1,7 +1,7 @@
 import { connection } from "../config/db.js";
 
 export const getArchivos = (callback) => {
-  const query = "SELECT * FROM Archivo";
+  const query = "SELECT * FROM archivo";
 
   connection.query(query, (err, results) => {
     if (err) {
@@ -15,7 +15,7 @@ export const getArchivos = (callback) => {
 // Obtener metadatos de los archivos del paciente
 export const getArchivosByEstudioId = (idEstudio, callback) => {
   connection.query(
-    "SELECT ID_Archivo, NombreArchivo, Fecha_Subida FROM Archivo WHERE ID_Estudio = ?",
+    "SELECT ID_Archivo, NombreArchivo, Fecha_Subida FROM archivo WHERE ID_Estudio = ?",
     [idEstudio],
     (err, results) => {
       if (err) return callback(err);
@@ -27,7 +27,7 @@ export const getArchivosByEstudioId = (idEstudio, callback) => {
 // Obtener el contenido del archivo cuando sea necesario
 export const getArchivoContentById = (idArchivo, callback) => {
   connection.query(
-    "SELECT * FROM Archivo WHERE ID_Archivo = ?",
+    "SELECT * FROM archivo WHERE ID_Archivo = ?",
     [idArchivo],
     (err, results) => {
       if (err) return callback(err);
@@ -47,7 +47,7 @@ export const createArchivo = (data, callback) => {
   }
 
   const query =
-    "INSERT INTO Archivo (Archivo, NombreArchivo, ID_Estudio) VALUES (?, ?, ?)";
+    "INSERT INTO archivo (Archivo, NombreArchivo, ID_Estudio) VALUES (?, ?, ?)";
 
   connection.query(
     query,
@@ -73,7 +73,7 @@ export const updateArchivo = (id, data, callback) => {
   }
 
   const query =
-    "UPDATE Archivo SET Archivo = ?, NombreArchivo = ?, ID_Estudio = ? WHERE ID_Archivo = ?";
+    "UPDATE archivo SET Archivo = ?, NombreArchivo = ?, ID_Estudio = ? WHERE ID_Archivo = ?";
 
   connection.query(
     query,
@@ -94,7 +94,7 @@ export const updateArchivo = (id, data, callback) => {
 };
 
 export const deleteArchivo = (id, callback) => {
-  const query = "DELETE FROM Archivo WHERE ID_Archivo = ?";
+  const query = "DELETE FROM archivo WHERE ID_Archivo = ?";
 
   connection.query(query, [id], (err, results) => {
     if (err) {

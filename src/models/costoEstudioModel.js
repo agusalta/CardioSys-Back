@@ -2,7 +2,7 @@
 import { connection } from "../config/db.js";
 
 export const getCostoEstudios = (callback) => {
-  connection.query("SELECT * FROM CostoEstudio", (err, results) => {
+  connection.query("SELECT * FROM costoestudio", (err, results) => {
     if (err) return callback(err);
     callback(null, results);
   });
@@ -10,7 +10,7 @@ export const getCostoEstudios = (callback) => {
 
 export const getCostoEstudioByIds = (ID_TipoEstudio, ID_Seguro, callback) => {
   connection.query(
-    "SELECT Costo FROM CostoEstudio WHERE ID_TipoEstudio = ? AND ID_Seguro = ?",
+    "SELECT Costo FROM costoestudio WHERE ID_TipoEstudio = ? AND ID_Seguro = ?",
     [ID_TipoEstudio, ID_Seguro],
     (err, results) => {
       if (err) return callback(err);
@@ -23,7 +23,7 @@ export const getCostoEstudioByIds = (ID_TipoEstudio, ID_Seguro, callback) => {
 export const createCostoEstudio = (data, callback) => {
   const { ID_TipoEstudio, ID_Seguro, Costo } = data;
   connection.query(
-    "INSERT INTO CostoEstudio (ID_TipoEstudio, ID_Seguro, Costo) VALUES (?, ?, ?)",
+    "INSERT INTO costoestudio (ID_TipoEstudio, ID_Seguro, Costo) VALUES (?, ?, ?)",
     [ID_TipoEstudio, ID_Seguro, Costo],
     (err, results) => {
       if (err) return callback(err);
@@ -48,7 +48,7 @@ export const updateCostoEstudio = (
 
 export const deleteCostoEstudio = (id, callback) => {
   connection.query(
-    "DELETE FROM CostoEstudio WHERE ID_Costo = ?",
+    "DELETE FROM costoestudio WHERE ID_Costo = ?",
     [id],
     (err, results) => {
       if (err) return callback(err);

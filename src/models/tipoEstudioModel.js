@@ -2,7 +2,7 @@
 import { connection } from "../config/db.js";
 
 export const getTipoEstudios = (callback) => {
-  connection.query("SELECT * FROM TipoEstudio", (err, results) => {
+  connection.query("SELECT * FROM tipoestudio", (err, results) => {
     if (err) return callback(err);
     callback(null, results);
   });
@@ -10,7 +10,7 @@ export const getTipoEstudios = (callback) => {
 
 export const getTipoEstudioById = (idTipoEstudio, callback) => {
   connection.query(
-    "SELECT * FROM TipoEstudio WHERE ID_TipoEstudio = ?",
+    "SELECT * FROM tipoestudio WHERE ID_TipoEstudio = ?",
     [idTipoEstudio],
     (err, results) => {
       if (err) return callback(err);
@@ -32,7 +32,7 @@ export const getEstudioMasRealizadoEnElMes = (callback) => {
 export const createTipoEstudio = (data, callback) => {
   const { NombreEstudio, Descripcion } = data;
   connection.query(
-    "INSERT INTO TipoEstudio (NombreEstudio, Descripcion) VALUES (?, ?)",
+    "INSERT INTO tipoestudio (NombreEstudio, Descripcion) VALUES (?, ?)",
     [NombreEstudio, Descripcion],
     (err, results) => {
       if (err) return callback(err);
@@ -44,7 +44,7 @@ export const createTipoEstudio = (data, callback) => {
 export const updateTipoEstudio = (id, data, callback) => {
   const { NombreEstudio, Descripcion } = data;
   connection.query(
-    "UPDATE TipoEstudio SET NombreEstudio = ?, Descripcion = ? WHERE ID_TipoEstudio = ?",
+    "UPDATE tipoestudio SET NombreEstudio = ?, Descripcion = ? WHERE ID_TipoEstudio = ?",
     [NombreEstudio, Descripcion, id],
     (err, results) => {
       if (err) return callback(err);
@@ -55,7 +55,7 @@ export const updateTipoEstudio = (id, data, callback) => {
 
 export const deleteTipoEstudio = (id, callback) => {
   connection.query(
-    "DELETE FROM TipoEstudio WHERE ID_TipoEstudio = ?",
+    "DELETE FROM tipoestudio WHERE ID_TipoEstudio = ?",
     [id],
     (err, results) => {
       if (err) return callback(err);

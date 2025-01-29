@@ -12,8 +12,7 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: "Usuario no encontrado" });
     }
 
-    // Verificar la contraseña
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       return res.status(401).json({ message: "Credenciales incorrectas" });
     }

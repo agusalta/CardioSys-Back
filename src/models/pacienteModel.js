@@ -19,7 +19,7 @@ export const createPaciente = (pacienteData, callback) => {
   } = pacienteData;
 
   const query = `
-    INSERT INTO Paciente 
+    INSERT INTO paciente 
     (ID_Seguro, ID_Empresa, Nombre, DNI, Apellido, Email, Telefono, FechaNacimiento, Altura, Peso, FrecuenciaCardiaca, FrecuenciaRespiratoria, Sexo) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;

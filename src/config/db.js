@@ -11,12 +11,13 @@ const createConnection = () => {
     database: process.env.MYSQL_DATABASE,
     port: process.env.MYSQL_PORT,
     charset: "utf8mb4",
+    connectTimeout: 10000,
   });
 
   console.log("USER", process.env.MYSQLUSER);
   console.log("PASS", process.env.MYSQL_ROOT_PASSWORD);
   console.log("HOST", process.env.MYSQLHOST);
-  console.log("PORT", process.env.MYSQL_URL || 3306);
+  console.log("PORT", process.env.MYSQLPORT);
   console.log("DB", process.env.MYSQL_DATABASE);
 
   connection.connect((err) => {

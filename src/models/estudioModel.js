@@ -42,7 +42,7 @@ export const getEstudioByFechas = (FechaInicio, FechaFin, callback) => {
 
 export const getTotalRecaudado = (callback) => {
   connection.query(
-    "SELECT SUM(Factura) AS totalRecaudado FROM estudio WHERE Factura > 0 AND Fecha >= CURDATE() - INTERVAL (DAY(CURDATE()) - 1) DAY AND Fecha < CURDATE() + INTERVAL 1 DAY;",
+    "SELECT COALESCE(SUM(Factura), 0) AS totalRecaudado FROM estudio WHERE Factura > 0 AND Fecha >= CURDATE() - INTERVAL (DAY(CURDATE()) - 1) DAY AND Fecha < CURDATE() + INTERVAL 1 DAY;",
     (err, results) => {
       if (err) return callback(err);
       callback(null, results);

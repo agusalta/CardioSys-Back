@@ -59,7 +59,6 @@ export const createEstudio = (data, callback) => {
     [Fecha, Asunto, Observacion, Factura, ID_Paciente, ID_TipoEstudio],
     (err, results) => {
       if (err) return callback(err);
-      console.log("Resultados de la consulta:", results);
       callback(null, results);
     }
   );

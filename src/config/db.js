@@ -25,7 +25,6 @@ const createConnection = () => {
       }
       return;
     }
-    console.log("Conectado a la base de datos");
   });
 
   return connection;

@@ -72,8 +72,6 @@ export const createNuevoEstudio = (req, res) => {
     }
 
     if (results && results.insertId) {
-      console.log("Insert ID:", results.insertId);
-
       return res.status(201).json({
         message: "Estudio creado exitosamente",
         data: {

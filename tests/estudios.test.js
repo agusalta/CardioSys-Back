@@ -25,7 +25,6 @@ describe("Pruebas API - Estudio", () => {
   test("Debería crear un nuevo estudio", async () => {
     const response = await request(app).post("/api/estudio").send(estudioData);
 
-    console.log("Respuesta creación:", response.body);
     expect(response.status).toBe(201);
     expect(response.body.message).toBe("Estudio creado exitosamente");
     estudioId = response.body.data.insertId;
@@ -36,7 +35,6 @@ describe("Pruebas API - Estudio", () => {
       .put(`/api/estudio/${estudioId}`)
       .send(estudioDataActualizado);
 
-    console.log("Respuesta actualización:", response.body);
     expect(response.status).toBe(200);
     expect(response.body.message).toBe("Estudio actualizado exitosamente");
   });
@@ -44,7 +42,6 @@ describe("Pruebas API - Estudio", () => {
   test("Debería eliminar el estudio creado", async () => {
     const response = await request(app).delete(`/api/estudio/${estudioId}`);
 
-    console.log("Respuesta eliminación:", response.body);
     expect(response.status).toBe(200);
     expect(response.body.message).toBe("Estudio eliminado exitosamente");
   });

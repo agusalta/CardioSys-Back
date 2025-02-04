@@ -23,10 +23,6 @@ describe("Pruebas para las rutas de Paciente", () => {
       .post("/api/pacientes")
       .send(newPaciente);
 
-    if (response.status !== 201) {
-      console.log("Error al crear paciente:", response.body);
-    }
-
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("insertId");
     createdPacienteId = response.body.insertId;
@@ -34,10 +30,6 @@ describe("Pruebas para las rutas de Paciente", () => {
 
   test("Debe obtener una lista de pacientes", async () => {
     const response = await request(app).get("/api/pacientes");
-
-    if (response.status !== 200) {
-      console.log("Error al obtener lista de pacientes:", response.body);
-    }
 
     expect(response.status).toBe(200);
     expect(Array.isArray(response.body)).toBe(true);
@@ -47,10 +39,6 @@ describe("Pruebas para las rutas de Paciente", () => {
     const response = await request(app).get(
       `/api/pacientes/${createdPacienteId}`
     );
-
-    if (response.status !== 200) {
-      console.log("Error al obtener paciente:", response.body);
-    }
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("ID_Paciente", createdPacienteId);
@@ -75,13 +63,6 @@ describe("Pruebas para las rutas de Paciente", () => {
       .put(`/api/pacientes/${createdPacienteId}`)
       .send(updatedPaciente);
 
-    console.log("Response Status:", response.status);
-    console.log("Response Body:", response.body);
-
-    if (response.status !== 200) {
-      console.log("Error al actualizar paciente:", response.body);
-    }
-
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty(
       "message",
@@ -93,10 +74,6 @@ describe("Pruebas para las rutas de Paciente", () => {
     const response = await request(app).delete(
       `/api/pacientes/${createdPacienteId}`
     );
-
-    if (response.status !== 200) {
-      console.log("Error al eliminar paciente:", response.body);
-    }
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty(

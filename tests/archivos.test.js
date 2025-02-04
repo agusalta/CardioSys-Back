@@ -19,8 +19,6 @@ describe("Pruebas de API - Archivos", () => {
       .field("ID_Estudio", 1) // Agregar el ID_Estudio
       .attach("Archivo", archivoPath); // Adjuntar el archivo real usando `attach()`
 
-    console.log("Respuesta crear archivo:", response.body); // Solo para depuración
-
     expect(response.status).toBe(201);
     expect(response.body.message).toBe("Archivo creado correctamente");
     archivoId = response.body.archivoId;
@@ -39,8 +37,6 @@ describe("Pruebas de API - Archivos", () => {
       .field("ID_Estudio", 1)
       .attach("Archivo", archivoPath); // Adjuntar el archivo binario actualizado
 
-    console.log("Respuesta actualizar archivo:", response.body); // Solo para depuración
-
     expect(response.status).toBe(200);
     expect(response.body.message).toBe("Archivo actualizado correctamente");
 
@@ -53,8 +49,6 @@ describe("Pruebas de API - Archivos", () => {
     const response = await request(app).delete(
       `/api/archivo/archivos/${archivoId}`
     );
-
-    console.log("Respuesta eliminar archivo:", response.body); // Solo para depuración
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe("Archivo eliminado correctamente");

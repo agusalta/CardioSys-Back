@@ -14,8 +14,6 @@ describe("Pruebas API - TipoEstudio", () => {
       .post("/api/tipoEstudio")
       .send(tipoEstudioData);
 
-    console.log("Respuesta creación:", response.body);
-
     expect(response.status).toBe(201);
     expect(response.body.message).toBe("Tipo de estudio creado exitosamente");
     tipoEstudioId = response.body.data.insertId; // Asignar el ID para pruebas posteriores
@@ -32,8 +30,6 @@ describe("Pruebas API - TipoEstudio", () => {
       .put(`/api/tipoEstudio/${tipoEstudioId}`) // Usamos el ID del tipoEstudio creado
       .send(tipoEstudioDataActualizado);
 
-    console.log("Respuesta actualización:", response.body); // Para depuración
-
     expect(response.status).toBe(200);
     expect(response.body.message).toBe(
       "Tipo de estudio actualizado exitosamente"
@@ -45,8 +41,6 @@ describe("Pruebas API - TipoEstudio", () => {
     const response = await request(app).delete(
       `/api/tipoEstudio/${tipoEstudioId}`
     ); // Usamos el ID del tipoEstudio creado
-
-    console.log("Respuesta eliminación:", response.body); // Para depuración
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe(

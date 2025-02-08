@@ -12,6 +12,8 @@ const createConnection = () => {
     port: process.env.MYSQL_PORT,
     charset: "utf8mb4",
     connectTimeout: 10000,
+    keepAliveInitialDelay: 10000,
+    enableKeepAlive: true,
   });
 
   connection.connect((err) => {

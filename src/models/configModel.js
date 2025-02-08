@@ -8,12 +8,12 @@ export const getConfig = (callback) => {
   });
 };
 
-export const updateConfig = (fontSize, callback) => {
+export const updateConfig = (FontSize, callback) => {
   const query = `
         UPDATE configuracion 
         SET FontSize = ?, UpdatedAt = CURRENT_TIMESTAMP 
         WHERE ID_Config = 1`;
-  connection.query(query, [fontSize], (err, results) => {
+  connection.query(query, [FontSize], (err, results) => {
     if (err) return callback(err, null);
     callback(null, results);
   });
@@ -27,11 +27,11 @@ export const deleteConfig = (callback) => {
   });
 };
 
-export const createConfig = (fontSize, callback) => {
+export const createConfig = (FontSize, callback) => {
   const query = `
         INSERT INTO configuracion (FontSize, UpdatedAt) 
         VALUES (?, CURRENT_TIMESTAMP)`;
-  connection.query(query, [fontSize], (err, results) => {
+  connection.query(query, [FontSize], (err, results) => {
     if (err) return callback(err, null);
     callback(null, results);
   });

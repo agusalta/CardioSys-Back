@@ -12,13 +12,13 @@ export const getConfig = (req, res) => {
 };
 
 export const updateConfig = (req, res) => {
-  const { fontSize } = req.body;
+  const { FontSize } = req.body;
 
-  if (!fontSize) {
-    return res.status(400).json({ error: "El campo 'fontSize' es requerido" });
+  if (!FontSize) {
+    return res.status(400).json({ error: "El campo 'FontSize' es requerido" });
   }
 
-  configModel.updateConfig(fontSize, (err, result) => {
+  configModel.updateConfig(FontSize, (err, result) => {
     if (err) {
       return res
         .status(500)
@@ -44,13 +44,13 @@ export const deleteConfig = (req, res) => {
 };
 
 export const createConfig = (req, res) => {
-  const { fontSize } = req.body;
+  const { FontSize } = req.body;
 
-  if (!fontSize) {
-    return res.status(400).json({ error: "El campo 'fontSize' es requerido" });
+  if (!FontSize) {
+    return res.status(400).json({ error: "El campo 'FontSize' es requerido" });
   }
 
-  configModel.createConfig(fontSize, (err, result) => {
+  configModel.createConfig(FontSize, (err, result) => {
     if (err) {
       return res
         .status(500)

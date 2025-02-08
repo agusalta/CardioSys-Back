@@ -87,7 +87,7 @@ export const deleteEstudio = (id, callback) => {
 
     // Después elimina el estudio
     connection.query(
-      "DELETE FROM Estudio WHERE ID_Estudio = ?",
+      "DELETE FROM estudio WHERE ID_Estudio = ?",
       [id],
       (err, results) => {
         if (err) {

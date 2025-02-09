@@ -25,11 +25,11 @@ export const login = async (req, res) => {
 
     res.cookie("auth", token, {
       domain:
-        process.env.NODE_ENV === "production" ? ".railway.app" : "localhost", // Usa el dominio adecuado según el entorno
+        process.env.NODE_ENV === "production" ? ".vercel.app" : "localhost",
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Solo usa secure si es producción
-      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // "None" para producción, "Lax" para local
-      maxAge: 3600000, // 1 hora
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      maxAge: 3600000,
     });
 
     return res.json({ message: "Login exitoso", token });
@@ -40,12 +40,12 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  res.clearCookie("auth", {
-    domain:
-      process.env.NODE_ENV === "production" ? ".railway.app" : "localhost", // Usa el dominio adecuado según el entorno
+  res.cookie("auth", token, {
+    domain: process.env.NODE_ENV === "production" ? ".vercel.app" : "localhost",
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // Solo usa secure si es producción
-    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // "None" para producción, "Lax" para local
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+    maxAge: 3600000,
   });
 
   res.json({ message: "Cierre de sesión exitoso" });

@@ -24,11 +24,10 @@ export const login = async (req, res) => {
     );
 
     res.cookie("auth", token, {
-      httpOnly: true,
+      httpOnly: process.env.NODE_ENV === "production",
       secure: process.env.NODE_ENV === "production", // Solo en producción
       sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // SameSite: None en producción
       maxAge: 3600000, // 1 hora
-      domain: process.env.NODE_ENV === "production" ? ".vercel.app" : undefined, // Asegúrate de configurar el dominio en producción
     });
 
     return res.json({ message: "Login exitoso", token });
@@ -44,7 +43,6 @@ export const logout = (req, res) => {
     secure: process.env.NODE_ENV === "production", // Solo en producción
     sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // SameSite: None en producción
     expires: new Date(0),
-    domain: process.env.NODE_ENV === "production" ? ".vercel.app" : undefined, // Asegúrate de configurar el dominio en producción
   });
 
   res.json({ message: "Cierre de sesión exitoso" });

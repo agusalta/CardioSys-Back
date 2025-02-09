@@ -28,6 +28,7 @@ export const login = async (req, res) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
       maxAge: 3600000,
+      partitioned: true,
     });
 
     return res.json({ message: "Login exitoso", token });
@@ -43,6 +44,7 @@ export const logout = (req, res) => {
     secure: process.env.NODE_ENV === "production",
     sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
     expires: new Date(0),
+    partitioned: true,
   });
 
   res.json({ message: "Cierre de sesión exitoso" });

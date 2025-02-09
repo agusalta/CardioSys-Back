@@ -6,13 +6,13 @@ export const login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const user = await findUserByUsername(username);
+    const user = findUserByUsername(username);
 
     if (!user) {
       return res.status(401).json({ message: "Usuario no encontrado" });
     }
 
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       return res.status(401).json({ message: "Credenciales incorrectas" });
     }
@@ -24,10 +24,6 @@ export const login = async (req, res) => {
     );
 
     res.cookie("auth", token, {
-      domain:
-        process.env.NODE_ENV === "production"
-          ? "sistema-medico-flax.vercel.app"
-          : "localhost",
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
@@ -42,15 +38,11 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  res.cookie("auth", token, {
-    domain:
-      process.env.NODE_ENV === "production"
-        ? "sistema-medico-flax.vercel.app"
-        : "localhost",
+  res.cookie("auth", "", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-    maxAge: 3600000,
+    expires: new Date(0),
   });
 
   res.json({ message: "Cierre de sesión exitoso" });

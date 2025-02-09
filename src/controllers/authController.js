@@ -6,13 +6,13 @@ export const login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const user = findUserByUsername(username);
+    const user = await findUserByUsername(username); // Asegúrate de usar await
 
     if (!user) {
       return res.status(401).json({ message: "Usuario no encontrado" });
     }
 
-    const passwordMatch = bcrypt.compare(password, user.password);
+    const passwordMatch = await bcrypt.compare(password, user.password); // Usa await aquí
     if (!passwordMatch) {
       return res.status(401).json({ message: "Credenciales incorrectas" });
     }
@@ -25,10 +25,10 @@ export const login = async (req, res) => {
 
     res.cookie("auth", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-      maxAge: 3600000,
-      partitioned: true,
+      secure: process.env.NODE_ENV === "production", // Solo en producción
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // SameSite: None en producción
+      maxAge: 3600000, // 1 hora
+      domain: process.env.NODE_ENV === "production" ? ".vercel.app" : undefined, // Asegúrate de configurar el dominio en producción
     });
 
     return res.json({ message: "Login exitoso", token });
@@ -41,10 +41,10 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
   res.cookie("auth", "", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+    secure: process.env.NODE_ENV === "production", // Solo en producción
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // SameSite: None en producción
     expires: new Date(0),
-    partitioned: true,
+    domain: process.env.NODE_ENV === "production" ? ".vercel.app" : undefined, // Asegúrate de configurar el dominio en producción
   });
 
   res.json({ message: "Cierre de sesión exitoso" });

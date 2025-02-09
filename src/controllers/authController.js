@@ -25,7 +25,9 @@ export const login = async (req, res) => {
 
     res.cookie("auth", token, {
       domain:
-        process.env.NODE_ENV === "production" ? ".vercel.app" : "localhost",
+        process.env.NODE_ENV === "production"
+          ? "sistema-medico-flax.vercel.app"
+          : "localhost",
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
@@ -41,7 +43,10 @@ export const login = async (req, res) => {
 
 export const logout = (req, res) => {
   res.cookie("auth", token, {
-    domain: process.env.NODE_ENV === "production" ? ".vercel.app" : "localhost",
+    domain:
+      process.env.NODE_ENV === "production"
+        ? "sistema-medico-flax.vercel.app"
+        : "localhost",
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",

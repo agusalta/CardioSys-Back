@@ -24,15 +24,12 @@ export const login = async (req, res) => {
     );
 
     res.cookie("auth", token, {
-      httpOnly: process.env.NODE_ENV === "production",
-      secure: process.env.NODE_ENV === "production", // Solo en producción
-      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // SameSite: None en producción
+      httpOnly: true, // true solo en producción
+      secure: true, // true solo en producción
+      sameSite: "None", // None en producción
       maxAge: 3600000, // 1 hora
       partitioned: true,
     });
-
-    console.log(process.env.NODE_ENV === "production" ? "None" : "Lax");
-    console.log(process.env.NODE_ENV === "production");
 
     return res.json({ message: "Login exitoso", token });
   } catch (error) {
@@ -43,9 +40,9 @@ export const login = async (req, res) => {
 
 export const logout = (req, res) => {
   res.cookie("auth", "", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // Solo en producción
-    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // SameSite: None en producción
+    httpOnly: true, // true solo en producción
+    secure: true, // true solo en producción
+    sameSite: "None", // None en producción
     expires: new Date(0),
     partitioned: true,
   });

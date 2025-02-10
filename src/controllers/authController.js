@@ -26,6 +26,7 @@ export const login = async (req, res) => {
     res.cookie("auth", token, {
       domain: ".up.railway.app",
       httpOnly: true,
+      path: "/",
       secure: process.env.NODE_ENV === "production",
       sameSite: "None",
       maxAge: 3600000,
@@ -43,6 +44,7 @@ export const logout = (req, res) => {
   res.cookie("auth", "", {
     domain: ".up.railway.app",
     httpOnly: true,
+    path: "/",
     secure: process.env.NODE_ENV === "production",
     sameSite: "None",
     expires: new Date(0),

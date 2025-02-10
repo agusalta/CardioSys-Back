@@ -31,6 +31,9 @@ export const login = async (req, res) => {
       partitioned: true,
     });
 
+    console.log(process.env.NODE_ENV === "production" ? "None" : "Lax");
+    console.log(process.env.NODE_ENV === "production");
+
     return res.json({ message: "Login exitoso", token });
   } catch (error) {
     console.error(error);

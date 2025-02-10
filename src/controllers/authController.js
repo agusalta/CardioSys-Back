@@ -24,10 +24,7 @@ export const login = async (req, res) => {
     );
 
     res.cookie("auth", token, {
-      domain:
-        process.env.NODE_ENV === "production"
-          ? new URL(process.env.ORIGIN).hostname
-          : "localhost",
+      domain: ".up.railway.app",
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "None",
@@ -43,14 +40,10 @@ export const login = async (req, res) => {
 
 export const logout = (req, res) => {
   res.cookie("auth", "", {
-    domain:
-      process.env.NODE_ENV === "production"
-        ? new URL(process.env.ORIGIN).hostname
-        : "localhost",
+    domain: ".up.railway.app",
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "None",
-    maxAge: 3600000,
     expires: new Date(0),
   });
 

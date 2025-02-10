@@ -25,10 +25,9 @@ export const login = async (req, res) => {
 
     res.cookie("auth", token, {
       httpOnly: true, // true solo en producción
-      secure: true, // true solo en producción
+      secure: process.env.NODE_ENV === "production", // true solo en producción
       sameSite: "None", // None en producción
       maxAge: 3600000, // 1 hora
-      partitioned: true,
     });
 
     return res.json({ message: "Login exitoso", token });
@@ -41,10 +40,9 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
   res.cookie("auth", "", {
     httpOnly: true, // true solo en producción
-    secure: true, // true solo en producción
+    secure: process.env.NODE_ENV === "production", // true solo en producción
     sameSite: "None", // None en producción
     expires: new Date(0),
-    partitioned: true,
   });
 
   res.json({ message: "Cierre de sesión exitoso" });

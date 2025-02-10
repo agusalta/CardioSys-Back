@@ -20,7 +20,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "https://sistema-medico-production.up.railway.app",
+    origin: process.env.ORIGIN,
     credentials: true,
   })
 );

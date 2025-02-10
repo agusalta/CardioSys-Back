@@ -24,13 +24,11 @@ export const login = async (req, res) => {
     );
 
     res.cookie("auth", token, {
-      domain: ".up.railway.app",
       httpOnly: true,
       path: "/",
       secure: process.env.NODE_ENV === "production",
-      sameSite: "None",
+      sameSite: "none",
       maxAge: 3600000,
-      partitioned: true,
     });
 
     return res.json({ message: "Login exitoso", token });
@@ -42,13 +40,11 @@ export const login = async (req, res) => {
 
 export const logout = (req, res) => {
   res.cookie("auth", "", {
-    domain: ".up.railway.app",
     httpOnly: true,
     path: "/",
     secure: process.env.NODE_ENV === "production",
-    sameSite: "None",
+    sameSite: "none",
     expires: new Date(0),
-    partitioned: true,
   });
 
   res.json({ message: "Cierre de sesión exitoso" });

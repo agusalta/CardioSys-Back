@@ -23,13 +23,13 @@ export const login = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.cookie("auth", token, {
-      httpOnly: true,
-      path: "/",
-      secure: true,
-      sameSite: "none",
-      maxAge: 3600000,
-    });
+    // res.cookie("auth", token, {
+    //   httpOnly: true,
+    //   path: "/",
+    //   secure: true,
+    //   sameSite: "none",
+    //   maxAge: 3600000,
+    // });
 
     return res.json({ message: "Login exitoso", token });
   } catch (error) {
@@ -39,13 +39,13 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  res.cookie("auth", "", {
-    httpOnly: true,
-    path: "/",
-    secure: true,
-    sameSite: "none",
-    expires: new Date(0),
-  });
+  // res.cookie("auth", "", {
+  //   httpOnly: true,
+  //   path: "/",
+  //   secure: true,
+  //   sameSite: "none",
+  //   expires: new Date(0),
+  // });
 
   res.json({ message: "Cierre de sesión exitoso" });
 };

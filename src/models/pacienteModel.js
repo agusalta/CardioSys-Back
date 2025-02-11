@@ -47,7 +47,7 @@ export const createPaciente = (pacienteData, callback) => {
 
 // Obtener todos los pacientes
 export const getAllPacientes = (callback) => {
-  const query = "SELECT * FROM paciente ORDER BY FechaCreacion DESC";
+  const query = "SELECT * FROM paciente";
   connection.query(query, callback);
 };
 
@@ -58,13 +58,13 @@ export const getPacienteById = (id, callback) => {
 };
 
 // Obtener el total de pacientes
-export const getPacientes = (callback) => {
-  const query = "SELECT * FROM paciente ORDER BY FechaCreacion DESC";
+export const getTotalPacientes = (callback) => {
+  const query = "SELECT COUNT(*) AS total FROM paciente";
   connection.query(query, (err, results) => {
     if (err) {
       return callback(err, null);
     }
-    callback(null, results);
+    callback(null, results[0].total);
   });
 };
 

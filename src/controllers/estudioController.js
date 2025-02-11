@@ -24,6 +24,18 @@ export const getEstudiosByPacienteId = (req, res) => {
   });
 };
 
+export const getEstudiosMasRealizados = (req, res) => {
+  estudioModel.getEstudiosMasRealizados((err, results) => {
+    if (err) {
+      return res.status(500).json({
+        error: "Error al obtener estudios realizados",
+        details: err,
+      });
+    }
+    res.status(200).json(results);
+  });
+};
+
 export const getEstudioByFechas = (req, res) => {
   const { FechaInicio, FechaFin } = req.body;
   estudioModel.getEstudioByFechas(FechaInicio, FechaFin, (err, results) => {

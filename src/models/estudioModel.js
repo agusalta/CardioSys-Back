@@ -7,6 +7,16 @@ export const getEstudios = (callback) => {
   });
 };
 
+export const getEstudiosMasRealizados = (callback) => {
+  connection.query(
+    "SELECT * FROM vista_estudios_realizados",
+    (err, results) => {
+      if (err) return callback(err);
+      callback(null, results);
+    }
+  );
+};
+
 export const getEstudioById = (IdEstudio, callback) => {
   connection.query(
     "SELECT * FROM estudio WHERE ID_Estudio = ?",

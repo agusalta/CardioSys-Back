@@ -20,7 +20,7 @@ export const getEstudioById = (IdEstudio, callback) => {
 
 export const getEstudiosByPacienteId = (idPaciente, callback) => {
   connection.query(
-    "SELECT * FROM estudio WHERE ID_Paciente = ?",
+    "SELECT * FROM estudio WHERE ID_Paciente = ? ORDER BY Fecha DESC",
     [idPaciente],
     (err, results) => {
       if (err) return callback(err);

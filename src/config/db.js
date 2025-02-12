@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 dotenv.config();
-
 import mysql from "mysql2";
 
 const createConnection = () => {
@@ -12,20 +11,30 @@ const createConnection = () => {
     port: process.env.MYSQL_PORT,
     charset: "utf8mb4",
     connectTimeout: 10000,
-    keepAliveInitialDelay: 10000,
     enableKeepAlive: true,
   });
 
-  connection.connect((err) => {
-    if (err) {
-      if (err.code === "ETIMEDOUT") {
-        console.error(err.message);
-      } else if (err.code === "ECONNREFUSED") {
-        console.error(err.message);
-      } else {
-        console.error("Error desconocido de conexión: ", err.message);
+  const connectWithRetry = () => {
+    connection.connect((err) => {
+      if (err) {
+        console.error("☠️ Error al conectar a la base de datos:", err.message);
+        setTimeout(connectWithRetry, 5000); // Reintentar después de 5 segundos
+        return;
       }
-      return;
+      console.log("Conectado a la base de datos 🗿");
+    });
+  };
+
+  connectWithRetry();
+
+  connection.on("error", (err) => {
+    console.error("☠️ Error en la conexión:", err);
+    if (err.code === "PROTOCOL_CONNECTION_LOST" || err.code === "ECONNRESET") {
+      console.log("Reconectando...🚀");
+      connection.destroy();
+      connection = createConnection();
+    } else {
+      throw err;
     }
   });
 
@@ -34,4 +43,4 @@ const createConnection = () => {
 
 let connection = createConnection();
 
-export { createConnection, connection };
+export { connection };

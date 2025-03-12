@@ -61,7 +61,7 @@ Make sure to configure the database connection, JWT secret key, and other necess
 
 ## API Documentation
 
-For detailed API documentation, feel free to contact me at my email address.
+For detailed API documentation & SQL database scheme, feel free to contact me at my email address.
 
 ## Contributing
 

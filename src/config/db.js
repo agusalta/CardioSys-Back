@@ -2,24 +2,6 @@ import dotenv from "dotenv";
 import mysql from "mysql2";
 dotenv.config();
 
-// Log de las variables de entorno separadas por modo
-console.log("Variables de entorno:", {
-  Demo: {
-    MYSQL_DATABASE: process.env.MYSQL_DATABASE_DEMO,
-    MYSQLHOST: process.env.MYSQLHOST_DEMO,
-    MYSQLUSER: process.env.MYSQLUSER_DEMO,
-    MYSQL_ROOT_PASSWORD: process.env.MYSQL_ROOT_PASSWORD_DEMO,
-    MYSQLPORT: process.env.MYSQLPORT_DEMO,
-  },
-  NoDemo: {
-    MYSQL_DATABASE: process.env.MYSQL_DATABASE,
-    MYSQLHOST: process.env.MYSQLHOST,
-    MYSQLUSER: process.env.MYSQLUSER,
-    MYSQL_ROOT_PASSWORD: process.env.MYSQL_ROOT_PASSWORD,
-    MYSQLPORT: process.env.MYSQLPORT,
-  },
-});
-
 // Variable para controlar el modo demo
 let isDemo = false;
 let connection = null;

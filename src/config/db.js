@@ -16,7 +16,7 @@ console.log("Variables de entorno:", {
     MYSQLHOST: process.env.MYSQLHOST,
     MYSQLUSER: process.env.MYSQLUSER,
     MYSQL_ROOT_PASSWORD: process.env.MYSQL_ROOT_PASSWORD,
-    MYSQLPORT: process.env.MYSQL_PORT,
+    MYSQLPORT: process.env.MYSQLPORT,
   },
 });
 
@@ -37,13 +37,12 @@ const initialize = (demoMode) => {
       ? process.env.MYSQL_ROOT_PASSWORD_DEMO
       : process.env.MYSQL_ROOT_PASSWORD,
     database: database,
-    port: demoMode ? process.env.MYSQLPORT_DEMO : process.env.MYSQL_PORT,
+    port: demoMode ? process.env.MYSQLPORT_DEMO : process.env.MYSQLPORT,
     charset: "utf8mb4",
     connectTimeout: 10000,
     waitForConnections: true,
     enableKeepAlive: true,
     keepAliveInitialDelay: 10000,
-    // Add timeouts to help with connection issues
     connectionLimit: 10,
     queueLimit: 0,
   };

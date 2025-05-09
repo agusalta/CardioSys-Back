@@ -97,3 +97,83 @@ export const deletePaciente = (req, res) => {
     res.status(200).json({ message: "Paciente eliminado correctamente" });
   });
 };
+
+// Importar pacientes desde CSV
+export const importPacientesFromCSV = (req, res) => {
+  if (!req.file) {
+    return res
+      .status(400)
+      .json({ error: "No se ha proporcionado ningún archivo CSV" });
+  }
+
+  const csvData = req.file.buffer.toString();
+  const lines = csvData.split("\n");
+  const headers = lines[0].split(",").map((header) => header.trim());
+
+  // Validar headers requeridos
+  const requiredHeaders = [
+    "Nombre",
+    "Apellido",
+    "DNI",
+    "Email",
+    "Telefono",
+    "FechaNacimiento",
+    "Sexo",
+  ];
+
+  const missingHeaders = requiredHeaders.filter(
+    (header) => !headers.includes(header)
+  );
+
+  if (missingHeaders.length > 0) {
+    return res.status(400).json({
+      error: "El archivo CSV no tiene el formato correcto",
+      missingHeaders: missingHeaders,
+    });
+  }
+
+  const pacientes = [];
+  for (let i = 1; i < lines.length; i++) {
+    if (!lines[i].trim()) continue; // Skip empty lines
+
+    const values = lines[i].split(",").map((value) => value.trim());
+    const paciente = {};
+
+    headers.forEach((header, index) => {
+      paciente[header] = values[index] || null;
+    });
+
+    pacientes.push(paciente);
+  }
+
+  pacienteModel.importPacientes(pacientes, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        error: "Error al importar los pacientes",
+        details: err,
+      });
+    }
+
+    res.status(201).json({
+      message: "Proceso de importación completado",
+      summary: {
+        total: pacientes.length,
+        success: results.success.length,
+        errors: results.errors.length,
+      },
+      details: {
+        success: results.success.map((item) => ({
+          nombre: item.paciente.Nombre,
+          apellido: item.paciente.Apellido,
+          dni: item.paciente.DNI,
+        })),
+        errors: results.errors.map((item) => ({
+          nombre: item.paciente.Nombre,
+          apellido: item.paciente.Apellido,
+          dni: item.paciente.DNI,
+          error: item.error,
+        })),
+      },
+    });
+  });
+};

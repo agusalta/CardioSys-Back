@@ -150,3 +150,86 @@ export const deletePaciente = (id, callback) => {
     connection.query(deletePacienteQuery, [id], callback);
   });
 };
+
+// Importar múltiples pacientes
+export const importPacientes = (pacientes, callback) => {
+  const results = {
+    success: [],
+    errors: [],
+  };
+
+  // Función para procesar cada paciente individualmente
+  const processPaciente = (paciente, index) => {
+    return new Promise((resolve) => {
+      // Primero verificamos si el DNI ya existe
+      const checkQuery = "SELECT ID_Paciente FROM paciente WHERE DNI = ?";
+      connection.query(checkQuery, [paciente.DNI], (err, existing) => {
+        if (err) {
+          results.errors.push({
+            index,
+            paciente,
+            error: "Error al verificar DNI: " + err.message,
+          });
+          return resolve();
+        }
+
+        if (existing.length > 0) {
+          results.errors.push({
+            index,
+            paciente,
+            error: "DNI duplicado",
+          });
+          return resolve();
+        }
+
+        // Si no existe, procedemos a insertar
+        const query = `
+          INSERT INTO paciente 
+          (Nombre, Apellido, DNI, Email, Telefono, FechaNacimiento, Sexo, Altura, Peso, FrecuenciaCardiaca, FrecuenciaRespiratoria) 
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+
+        const values = [
+          paciente.Nombre,
+          paciente.Apellido,
+          paciente.DNI,
+          paciente.Email,
+          paciente.Telefono,
+          paciente.FechaNacimiento,
+          paciente.Sexo,
+          paciente.Altura || null,
+          paciente.Peso || null,
+          paciente.FrecuenciaCardiaca || null,
+          paciente.FrecuenciaRespiratoria || null,
+        ];
+
+        connection.query(query, values, (err, result) => {
+          if (err) {
+            results.errors.push({
+              index,
+              paciente,
+              error: "Error al insertar: " + err.message,
+            });
+          } else {
+            results.success.push({
+              index,
+              paciente,
+              id: result.insertId,
+            });
+          }
+          resolve();
+        });
+      });
+    });
+  };
+
+  // Procesar todos los pacientes en secuencia
+  const processAllPacientes = async () => {
+    for (let i = 0; i < pacientes.length; i++) {
+      await processPaciente(pacientes[i], i);
+    }
+    callback(null, results);
+  };
+
+  processAllPacientes();
+};

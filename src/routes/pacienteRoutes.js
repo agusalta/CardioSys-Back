@@ -1,4 +1,5 @@
 import express from "express";
+import multer from "multer";
 import {
   createPaciente,
   getAllPacientes,
@@ -7,9 +8,12 @@ import {
   deletePaciente,
   getTotalPacientes,
   getPacientesNuevosEsteMes,
+  importPacientesFromCSV,
 } from "../controllers/pacienteController.js";
 
 const router = express.Router();
+
+const upload = multer({ storage: multer.memoryStorage() });
 
 // Crear un nuevo paciente
 router.post("/", createPaciente);
@@ -31,5 +35,8 @@ router.put("/:id", updatePaciente);
 
 // Eliminar un paciente por ID
 router.delete("/:id", deletePaciente);
+
+// Importar pacientes desde CSV
+router.post("/import", upload.single("file"), importPacientesFromCSV);
 
 export default router;
